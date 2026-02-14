@@ -25,7 +25,7 @@ const processPayment = async (paymentData) => {
   }
 
   // Generate mock transaction ID
-  const transactionId = `TXN-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+  const transactionId = `TXN-${Date.now()}-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
 
   return {
     success: true,
@@ -45,7 +45,7 @@ const refundPayment = async (transactionId, amount) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   // Generate mock refund ID
-  const refundId = `REF-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+  const refundId = `REF-${Date.now()}-${Math.random().toString(36).substring(2, 11).toUpperCase()}`;
 
   return {
     success: true,
