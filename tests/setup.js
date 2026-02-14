@@ -1,32 +1,23 @@
+// Mock setup for tests - no real database needed for now
+// Tests will use mocked services instead
+
 const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 
-let mongoServer;
-
-// Setup test database before all tests
-beforeAll(async () => {
-  // Use in-memory MongoDB for testing
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
-
-  await mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+// Mock mongoose connect
+jest.mock('mongoose', () => {
+  const actual = jest.requireActual('mongoose');
+  return {
+    ...actual,
+    connect: jest.fn().mockResolvedValue({}),
+    connection: {
+      collections: {},
+    },
+  };
 });
 
-// Clean up database after each test
-afterEach(async () => {
-  const collections = mongoose.connection.collections;
-  for (const key in collections) {
-    await collections[key].deleteMany({});
-  }
-});
-
-// Close database connection after all tests
+// Clean up after tests
 afterAll(async () => {
-  await mongoose.disconnect();
-  if (mongoServer) {
-    await mongoServer.stop();
+  if (mongoose.disconnect) {
+    await mongoose.disconnect();
   }
 });

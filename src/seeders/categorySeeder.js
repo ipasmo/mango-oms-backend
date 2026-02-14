@@ -1,5 +1,4 @@
 const Category = require('../models/Category');
-const { createSlug } = require('../utils/helpers');
 const logger = require('../utils/logger');
 
 const categories = [

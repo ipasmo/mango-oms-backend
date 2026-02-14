@@ -8,7 +8,7 @@
  * @returns {Promise<{success: boolean, transactionId: string}>}
  */
 const processPayment = async (paymentData) => {
-  const { amount, paymentMethod, cardDetails } = paymentData;
+  const { amount, paymentMethod } = paymentData;
 
   // Simulate processing delay
   await new Promise((resolve) => setTimeout(resolve, 1000));

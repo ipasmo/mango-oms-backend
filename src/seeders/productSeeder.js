@@ -1,6 +1,5 @@
 const Product = require('../models/Product');
 const Category = require('../models/Category');
-const { createSlug } = require('../utils/helpers');
 const logger = require('../utils/logger');
 
 const getProducts = (categories) => {

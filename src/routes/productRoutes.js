@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 const auth = require('../middleware/auth');
-const { validate, body, param, query } = require('../utils/validators');
+const { validate, body, param } = require('../utils/validators');
 
 /**
  * @swagger
