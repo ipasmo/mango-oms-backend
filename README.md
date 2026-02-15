@@ -111,7 +111,12 @@ ADMIN_PASSWORD=Admin@123
 
 ### 4. Start MongoDB
 
-Make sure MongoDB is running on your system:
+#### 4.1 Install MongoDB & Studio 3T Community Edition
+- Link to download MongoDB Community Edition: https://www.mongodb.com/try/download/community-edition/releases
+- Link to download Studio 3T Community Edition: https://robomongo.org/download
+
+
+#### 4.2 Make sure MongoDB is running on your system:
 
 ```bash
 # On macOS with Homebrew
@@ -119,6 +124,9 @@ brew services start mongodb-community
 
 # On Linux
 sudo systemctl start mongod
+
+# On Windows
+CMD\>mongod --dbpath D:\\Mone\\installations\\mongodb-win32-x86_64-windows-8.2.5\\data\\db --port 27017 --logpath D:\\Mone\\installations\\mongodb-win32-x86_64-windows-8.2.5\\logs\\mongod.log
 
 # Or use Docker
 docker run -d -p 27017:27017 --name mongodb mongo:7.0
@@ -133,7 +141,7 @@ npm run seed
 ```
 
 **Default Admin Credentials:**
-- Email: `admin@mangooms.com`
+- Email: `admin@ipasmo.com`
 - Password: `Admin@123`
 
 ### 6. Start the Development Server
