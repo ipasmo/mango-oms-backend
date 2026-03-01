@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # MongoDB Service
+  mongodb:
+    image: mongo:7.0
+    container_name: mango-oms-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: mango-oms
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - mango-oms-network
+
+  # Backend API Service
+  backend:
+    build: .
+    container_name: mango-oms-backend
+    restart: unless-stopped
+    depends_on:
+      - mongodb
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:admin123@mongodb:27017/mango-oms?authSource=admin
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_REFRESH_SECRET: your-super-secret-refresh-key-change-in-production
+      JWT_EXPIRE: 15m
+      JWT_REFRESH_EXPIRE: 7d
+      FRONTEND_URL: http://localhost:3000
+      EMAIL_HOST: smtp.gmail.com
+      EMAIL_PORT: 587
+      EMAIL_USER: your-email@gmail.com
+      EMAIL_PASSWORD: your-email-password
+      ADMIN_EMAIL: admin@mangooms.com
+      ADMIN_PASSWORD: Admin@123
+    volumes:
+      - ./uploads:/usr/src/app/uploads
+      - ./logs:/usr/src/app/logs
+    networks:
+      - mango-oms-network
+    command: sh -c "npm run seed && npm start"
+
+volumes:
+  mongodb_data:
+
+networks:
+  mango-oms-network:
+    driver: bridge
